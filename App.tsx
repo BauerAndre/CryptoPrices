@@ -3,8 +3,15 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {HomeScreen, DetailScreen} from './screens';
+import io from 'socket.io-client';
 
 const Stack = createNativeStackNavigator();
+
+const socket = io('http://127.0.0.1:3000');
+
+socket.on('connect', () => {
+  console.log('socket is connected');
+});
 
 const App = () => {
   return (
