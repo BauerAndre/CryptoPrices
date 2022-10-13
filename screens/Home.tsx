@@ -1,16 +1,70 @@
 import React from 'react';
-import {Text, View, Pressable} from 'react-native';
+import {Text, View, Pressable, FlatList, StyleSheet} from 'react-native';
+import {Crypto} from '../models/crypto';
+
+const cryptoList: Crypto[] = [
+  {
+    id: '1',
+    name: 'BTC',
+    price: 38001.64,
+  },
+  {
+    id: '2',
+    name: 'ETH',
+    price: 4025.0,
+  },
+  {
+    id: '3',
+    name: 'SOL',
+    price: 250.21,
+  },
+];
 
 export const HomeScreen = ({navigation}: {navigation: any}) => {
-  const navigateToDetail = () => {
+  const openCryptoDetail = () => {
     navigation.navigate('Detail');
   };
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Home Screen</Text>
-      <Pressable onPress={navigateToDetail}>
-        <Text>Navigate to Detail</Text>
+  const renderItem = ({item}: {item: Crypto}) => {
+    return (
+      <Pressable style={styles.crypto} onPress={() => openCryptoDetail()}>
+        <Text style={styles.name}>{item.name}</Text>
+        <Text style={styles.price}>{item.price}</Text>
       </Pressable>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={cryptoList}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#272d42',
+    flex: 1,
+  },
+  crypto: {
+    borderRadius: 5,
+    borderWidth: 1,
+    backgroundColor: '#000',
+    padding: 20,
+    flex: 1,
+    margin: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  name: {
+    color: '#fff',
+    fontSize: 24,
+  },
+  price: {
+    color: '#ffab00',
+    fontSize: 28,
+  },
+});
