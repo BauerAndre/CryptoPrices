@@ -1,24 +1,13 @@
 import React from 'react';
 import {Text, View, Pressable, FlatList, StyleSheet} from 'react-native';
 import {Crypto} from '../models/crypto';
+import {socket} from '../App';
 
-const cryptoList: Crypto[] = [
-  {
-    id: '1',
-    name: 'BTC',
-    price: 38001.64,
-  },
-  {
-    id: '2',
-    name: 'ETH',
-    price: 4025.0,
-  },
-  {
-    id: '3',
-    name: 'SOL',
-    price: 250.21,
-  },
-];
+let cryptoList: Crypto[] = [];
+
+socket.on('crypto', data => {
+  const cryptoList = data;
+});
 
 export const HomeScreen = ({navigation}: {navigation: any}) => {
   const openCryptoDetail = (id: string) => {
