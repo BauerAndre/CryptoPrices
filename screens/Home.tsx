@@ -21,12 +21,14 @@ const cryptoList: Crypto[] = [
 ];
 
 export const HomeScreen = ({navigation}: {navigation: any}) => {
-  const openCryptoDetail = () => {
-    navigation.navigate('Detail');
+  const openCryptoDetail = (id: string) => {
+    navigation.navigate('Detail', {id: id});
   };
   const renderItem = ({item}: {item: Crypto}) => {
     return (
-      <Pressable style={styles.crypto} onPress={() => openCryptoDetail()}>
+      <Pressable
+        style={styles.crypto}
+        onPress={() => openCryptoDetail(item.id)}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.price}>{item.price}</Text>
       </Pressable>
