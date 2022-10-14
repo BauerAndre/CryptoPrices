@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, Pressable, FlatList, StyleSheet} from 'react-native';
 import {Crypto} from '../models/crypto';
 import {socket} from '../App';
 
-let cryptoList: Crypto[] = [];
-
-socket.on('crypto', data => {
-  const cryptoList = data;
-});
-
 export const HomeScreen = ({navigation}: {navigation: any}) => {
+  const [cryptoList, setCryptoList] = useState();
+
+  useEffect(() => {
+    socket.on('crypto', data => {
+      setCryptoList(data);
+    });
+  }, []);
   const openCryptoDetail = (id: string) => {
     navigation.navigate('Detail', {id: id});
   };
@@ -19,7 +20,7 @@ export const HomeScreen = ({navigation}: {navigation: any}) => {
         style={styles.crypto}
         onPress={() => openCryptoDetail(item.id)}>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.price}>{item.price}</Text>
+        <Text style={styles.price}>{Math.round(item.price * 100) / 100}</Text>
       </Pressable>
     );
   };
