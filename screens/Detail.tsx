@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, ActivityIndicator} from 'react-native';
+import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
 import axios from 'axios';
-import { API_URL } from '../consts/app-costs';
+import {API_URL} from '../consts/app-costs';
 
 export const DetailScreen = ({route}: {route: any}) => {
   const id = route.params.id;
@@ -23,12 +23,71 @@ export const DetailScreen = ({route}: {route: any}) => {
   return (
     <>
       {cryptoDataLoaded && (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <Text>{JSON.stringify(cryptoProfile)}</Text>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <View style={styles.headerInfo}>
+              <Text style={styles.name}>{cryptoProfile.name}</Text>
+              <Text style={styles.symbol}>{cryptoProfile.symbol}</Text>
+              <Text style={styles.price}>
+                {`$ ${convert(cryptoMarketData.market_data.price_usd)}`}
+              </Text>
+            </View>
+            <View style={styles.headerTagLine}>
+            <Text style={styles.line}>{cryptoProfile.profile.general.overview.tagline}</Text>
+            </View>
+          </View>
         </View>
       )}
 
       {!cryptoDataLoaded && <ActivityIndicator size="large" color="#00ff00" />}
     </>
   );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#272d42',
+    padding: 10,
+    flex: 1,
+  },
+  header: {
+    backgroundColor: '#000',
+    height: 100,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 15,
+  },
+  headerInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  headerTagLine: {
+    marginTop: 10,
+  },
+  name: {
+    fontSize: 20,
+    color: '#fff',
+  },
+  symbol: {
+    fontSize: 15,
+    padding: 5,
+    backgroundColor: '#272d42',
+    color: '#fff',
+  },
+  price: {
+    fontSize: 28,
+    color: '#ffab00',
+    width: 150,
+    textAlign: 'right',
+  },
+  line: {
+    color: '#fff',
+    fontSize: 16,
+    marginTop: 10,
+  },
+});
+
+const convert = (price: number) => {
+  return Math.round(price * 100) / 100;
 };
