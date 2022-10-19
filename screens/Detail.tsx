@@ -4,11 +4,15 @@ import {
   View,
   ActivityIndicator,
   StyleSheet,
-  ScrollView} from 'react-native';
+  ScrollView,
+  useWindowDimensions
+} from 'react-native';
+import RenderHtml from 'react-native-render-html';
 import axios from 'axios';
 import {API_URL} from '../consts/app-costs';
 
 export const DetailScreen = ({route}: {route: any}) => {
+  const {width} = useWindowDimensions();
   const id = route.params.id;
   const [cryptoProfile, setCryptoProfile] = useState();
   const [cryptoMarketData, setCryptoMarketData] = useState();
@@ -46,15 +50,21 @@ export const DetailScreen = ({route}: {route: any}) => {
           <ScrollView style={styles.cryptoInfo}>
             <View style={styles.cryptoInfoRow}>
               <Text style={styles.cryptoInfoTitle}>Overview</Text>
-              <Text style={styles.line}>
-                {cryptoProfile.profile.general.overview.project_details}
-              </Text>
+              <RenderHtml
+                contentWidth={width}
+                source={{
+                  html: `< p style="color: #fff">${cryptoProfile.profile.general.overview.project_details}</p>`,
+                }}
+              />
             </View>
             <View style={styles.cryptoInfoRow}>
               <Text style={styles.cryptoInfoTitle}>Background</Text>
-              <Text style={styles.line}>
-                {cryptoProfile.profile.general.background.background_details}
-              </Text>
+              <RenderHtml
+                contentWidth={width}
+                source={{
+                  html: `< p style="color: #fff">${cryptoProfile.profile.general.background.background_details}</p>`,
+                }}
+              />
             </View>
           </ScrollView>
         </View>
