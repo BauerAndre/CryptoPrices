@@ -1,5 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, ActivityIndicator, StyleSheet} from 'react-native';
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView} from 'react-native';
 import axios from 'axios';
 import {API_URL} from '../consts/app-costs';
 
@@ -36,6 +41,14 @@ export const DetailScreen = ({route}: {route: any}) => {
             <Text style={styles.line}>{cryptoProfile.profile.general.overview.tagline}</Text>
             </View>
           </View>
+          <ScrollView style={styles.cryptoInfo}>
+            <View style={styles.cryptoInfoRow}>
+              <Text style={styles.cryptoInfoTitle}>Overview</Text>
+              <Text style={styles.line}>
+                {cryptoProfile.profile.general.overview.project_details}
+              </Text>
+            </View>
+          </ScrollView>
         </View>
       )}
 
@@ -85,6 +98,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     marginTop: 10,
+  },
+
+  cryptoInfo: {
+    backgroundColor: '#000',
+    padding: 10,
+    flex: 1,
+    borderRadius: 12,
+    marginBottom: 15,
+  },
+  cryptoInfoTitle: {
+    color: '#ffab00',
+    fontSize: 22,
+  },
+  cryptoInfoRow: {
+    flex: 1,
   },
 });
 
