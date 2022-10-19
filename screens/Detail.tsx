@@ -38,7 +38,9 @@ export const DetailScreen = ({route}: {route: any}) => {
               </Text>
             </View>
             <View style={styles.headerTagLine}>
-            <Text style={styles.line}>{cryptoProfile.profile.general.overview.tagline}</Text>
+              <Text style={styles.line}>
+                {cryptoProfile.profile.general.overview.tagline}
+              </Text>
             </View>
           </View>
           <ScrollView style={styles.cryptoInfo}>
@@ -46,6 +48,12 @@ export const DetailScreen = ({route}: {route: any}) => {
               <Text style={styles.cryptoInfoTitle}>Overview</Text>
               <Text style={styles.line}>
                 {cryptoProfile.profile.general.overview.project_details}
+              </Text>
+            </View>
+            <View style={styles.cryptoInfoRow}>
+              <Text style={styles.cryptoInfoTitle}>Background</Text>
+              <Text style={styles.line}>
+                {cryptoProfile.profile.general.background.background_details}
               </Text>
             </View>
           </ScrollView>
